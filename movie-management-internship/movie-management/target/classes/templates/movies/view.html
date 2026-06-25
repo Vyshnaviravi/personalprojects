@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.title}">Movie Detail</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand">🎬 Movie Management</div>
+    <div class="nav-links">
+        <a th:href="@{/movies}">Movies</a>
+        <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')">Admin</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="detail-card">
+        <div class="detail-header">
+            <h1 th:text="${movie.title}"></h1>
+            <span class="rating-badge big" th:text="'⭐ ' + ${movie.rating} + ' / 10'"></span>
+        </div>
+
+        <div class="detail-grid">
+            <div class="detail-item">
+                <label>Release Year</label>
+                <span th:text="${movie.releaseYear}"></span>
+            </div>
+            <div class="detail-item">
+                <label>Genre</label>
+                <span th:text="${movie.genre != null ? movie.genre.name : 'N/A'}"></span>
+            </div>
+            <div class="detail-item">
+                <label>Director</label>
+                <span th:text="${movie.director != null ? movie.director.name : 'N/A'}"></span>
+            </div>
+            <div class="detail-item" th:if="${movie.director != null and movie.director.nationality != null}">
+                <label>Director Nationality</label>
+                <span th:text="${movie.director.nationality}"></span>
+            </div>
+        </div>
+
+        <div class="detail-item full-width" th:if="${movie.description}">
+            <label>Description</label>
+            <p th:text="${movie.description}"></p>
+        </div>
+
+        <div class="form-actions">
+            <a th:href="@{/movies/edit/{id}(id=${movie.id})}" class="btn btn-warning" sec:authorize="hasRole('ADMIN')">Edit</a>
+            <a th:href="@{/movies}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

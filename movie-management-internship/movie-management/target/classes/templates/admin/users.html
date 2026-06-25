@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand">🎬 Movie Management</div>
+    <div class="nav-links">
+        <a th:href="@{/movies}">Movies</a>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/users}" class="active">Users</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>All Users</h1>
+    <div class="table-wrapper">
+        <table class="table">
+            <thead>
+                <tr><th>#</th><th>Username</th><th>Role</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="user, stat : ${users}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td><span class="role-badge" th:text="${user.role}"></span></td>
+                    <td><span th:text="${user.enabled ? 'Active' : 'Disabled'}"
+                              th:class="${user.enabled ? 'status-active' : 'status-disabled'}"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

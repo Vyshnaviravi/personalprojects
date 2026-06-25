@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Genres</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand">🎬 Movie Management</div>
+    <div class="nav-links">
+        <a th:href="@{/movies}">Movies</a>
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/genres}" class="active">Genres</a>
+        <a th:href="@{/admin/directors}">Directors</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+    <div class="two-col">
+        <!-- Add form -->
+        <div class="form-card">
+            <h2>Add Genre</h2>
+            <form action="/admin/genres/save" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div class="form-group">
+                    <label>Genre Name *</label>
+                    <input type="text" name="name" placeholder="e.g. Horror" required/>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Genre</button>
+            </form>
+        </div>
+
+        <!-- List -->
+        <div class="table-wrapper">
+            <h2>All Genres</h2>
+            <table class="table">
+                <thead><tr><th>#</th><th>Name</th><th>Action</th></tr></thead>
+                <tbody>
+                    <tr th:each="genre, stat : ${genres}">
+                        <td th:text="${stat.count}"></td>
+                        <td th:text="${genre.name}"></td>
+                        <td>
+                            <a th:href="@{/admin/genres/delete/{id}(id=${genre.id})}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Delete genre?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

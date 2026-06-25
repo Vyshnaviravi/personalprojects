@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-brand">🎬 Movie Management</div>
+    <div class="nav-links">
+        <a th:href="@{/movies}">Movies</a>
+        <a th:href="@{/admin/dashboard}" class="active">Dashboard</a>
+        <a th:href="@{/admin/genres}">Genres</a>
+        <a th:href="@{/admin/directors}">Directors</a>
+        <a th:href="@{/admin/users}">Users</a>
+        <form action="/logout" method="post" style="display:inline">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit" class="btn btn-sm">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Admin Dashboard</h1>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">🎬</div>
+            <div class="stat-number" th:text="${totalMovies}">0</div>
+            <div class="stat-label">Total Movies</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎭</div>
+            <div class="stat-number" th:text="${totalGenres}">0</div>
+            <div class="stat-label">Genres</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎥</div>
+            <div class="stat-number" th:text="${totalDirectors}">0</div>
+            <div class="stat-label">Directors</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-number" th:text="${totalUsers}">0</div>
+            <div class="stat-label">Users</div>
+        </div>
+    </div>
+
+    <div class="quick-links">
+        <h2>Quick Actions</h2>
+        <div class="link-grid">
+            <a th:href="@{/movies/add}" class="quick-card">➕ Add Movie</a>
+            <a th:href="@{/admin/genres}" class="quick-card">🎭 Manage Genres</a>
+            <a th:href="@{/admin/directors}" class="quick-card">🎥 Manage Directors</a>
+            <a th:href="@{/admin/users}" class="quick-card">👥 View Users</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
